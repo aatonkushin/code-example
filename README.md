@@ -1,2 +1,2 @@
 # code-example
-Простой Java Spring Framework etc для собеседований
+Простой пример использования Java Spring Framework etc для собеседований
