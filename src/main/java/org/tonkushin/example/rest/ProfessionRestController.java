@@ -42,26 +42,26 @@ public class ProfessionRestController {
         return item;
     }
 
-    @GetMapping(URL+"count/")
-    public Long getProfessionsCount(){
+    @GetMapping(URL + "count/")
+    public Long getProfessionsCount() {
         return service.count();
     }
 
     //Добавляет
     @PostMapping(URL)
-    Profession createProfession(@RequestBody Profession item) {
+    public Profession createProfession(@RequestBody Profession item) {
         return service.save(item);
     }
 
     //Редактирует
     @PutMapping(URL + "{id}")
-    Profession editProfession(@RequestBody Profession item, @PathVariable String id) {
+    public Profession editProfession(@RequestBody Profession item, @PathVariable String id) {
         return service.save(item);
     }
 
     //Удаляет
     @DeleteMapping(URL + "{id}")
-    void deleteProfession(@PathVariable Long id) {
+    public void deleteProfession(@PathVariable Long id) {
         service.delete(id);
     }
 }

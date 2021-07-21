@@ -32,7 +32,7 @@ public class PersonRestController {
     public Person getPerson(@PathVariable("id") Long id) {
         Person item = new Person();
 
-        if (id != null && id != - 1) {
+        if (id != null && id != -1) {
             //Редактирование существующей записи
             item = service.findOne(id);
         }
@@ -40,26 +40,26 @@ public class PersonRestController {
         return item;
     }
 
-    @GetMapping(URL+"count/")
-    public Long getPersonalCount(){
+    @GetMapping(URL + "count/")
+    public Long getPersonalCount() {
         return service.count();
     }
 
     //Добавляет
     @PostMapping(URL)
-    Person createPerson(@RequestBody Person item) {
+    public Person createPerson(@RequestBody Person item) {
         return service.save(item);
     }
 
     //Редактирует
     @PutMapping(URL + "{id}")
-    Person editPerson(@RequestBody Person item, @PathVariable String id) {
+    public Person editPerson(@RequestBody Person item, @PathVariable String id) {
         return service.save(item);
     }
 
     //Удаляет
     @DeleteMapping(URL + "{id}")
-    void deletePerson(@PathVariable Long id) {
+    public void deletePerson(@PathVariable Long id) {
         service.delete(id);
     }
 }

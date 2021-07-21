@@ -48,19 +48,19 @@ public class DepartmentRestController {
 
     //Добавляет
     @PostMapping(URL)
-    Department createDepartment(@RequestBody Department item) {
+    public Department createDepartment(@RequestBody Department item) {
         return service.save(item);
     }
 
     //Редактирует
     @PutMapping(URL + "{id}")
-    Department editDepartment(@RequestBody Department item, @PathVariable String id) {
+    public Department editDepartment(@RequestBody Department item, @PathVariable String id) {
         return service.save(item);
     }
 
     //Удаляет
     @DeleteMapping(URL + "{id}")
-    void deleteDepartment(@PathVariable Long id) {
+    public void deleteDepartment(@PathVariable Long id) {
         service.delete(id);
     }
 }
