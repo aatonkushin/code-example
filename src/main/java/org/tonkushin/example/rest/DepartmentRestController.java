@@ -1,5 +1,6 @@
 package org.tonkushin.example.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 import org.tonkushin.example.model.Department;
 import org.tonkushin.example.service.DepartmentService;
@@ -21,6 +22,7 @@ public class DepartmentRestController {
     }
 
     //Возвращает всех
+    @Operation(summary = "Get all departments")
     @GetMapping(URL)
     @ResponseBody
     public List<Department> getDepartments() {
@@ -28,6 +30,7 @@ public class DepartmentRestController {
     }
 
     //Возвращает по id
+    @Operation(summary = "Get department by id")
     @GetMapping(URL + "{id}")
     public Department getDepartment(@PathVariable("id") Long id) {
         Department item = new Department();
@@ -41,24 +44,28 @@ public class DepartmentRestController {
         return item;
     }
 
+    @Operation(summary = "Get count of all departments")
     @GetMapping(URL + "count/")
     public Long getDepartmentsCount() {
         return service.count();
     }
 
     //Добавляет
+    @Operation(summary = "Create department")
     @PostMapping(URL)
     public Department createDepartment(@RequestBody Department item) {
         return service.save(item);
     }
 
     //Редактирует
+    @Operation(summary = "Edit department by id")
     @PutMapping(URL + "{id}")
     public Department editDepartment(@RequestBody Department item, @PathVariable String id) {
         return service.save(item);
     }
 
     //Удаляет
+    @Operation(summary = "Delete department by id")
     @DeleteMapping(URL + "{id}")
     public void deleteDepartment(@PathVariable Long id) {
         service.delete(id);

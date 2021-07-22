@@ -1,5 +1,6 @@
 package org.tonkushin.example.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 import org.tonkushin.example.model.Person;
 import org.tonkushin.example.service.PersonService;
@@ -21,6 +22,7 @@ public class PersonRestController {
     }
 
     //Возвращает всех
+    @Operation(summary = "Get personal")
     @GetMapping(URL)
     @ResponseBody
     public List<Person> getPersons() {
@@ -28,6 +30,7 @@ public class PersonRestController {
     }
 
     //Возвращает по id
+    @Operation(summary = "Get person by id")
     @GetMapping(URL + "{id}")
     public Person getPerson(@PathVariable("id") Long id) {
         Person item = new Person();
@@ -40,24 +43,28 @@ public class PersonRestController {
         return item;
     }
 
+    @Operation(summary = "Get count of all persons")
     @GetMapping(URL + "count/")
     public Long getPersonalCount() {
         return service.count();
     }
 
     //Добавляет
+    @Operation(summary = "Create person")
     @PostMapping(URL)
     public Person createPerson(@RequestBody Person item) {
         return service.save(item);
     }
 
     //Редактирует
+    @Operation(summary = "Edit person")
     @PutMapping(URL + "{id}")
     public Person editPerson(@RequestBody Person item, @PathVariable String id) {
         return service.save(item);
     }
 
     //Удаляет
+    @Operation(summary = "Delete person")
     @DeleteMapping(URL + "{id}")
     public void deletePerson(@PathVariable Long id) {
         service.delete(id);
