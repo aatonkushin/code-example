@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пример кода - sockets</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/socket-page.js"></script>
+</head>
+<body>
+<h1>Пример кода - sockets</h1>
+<div>
+    <button id="connect" type="submit">Подключить</button>
+    <button id="disconnect" type="submit" disabled="disabled">Отключить</button>
+</div>
+<br/>
+<div>
+    <label for="message">Строка</label>
+    <input type="text" id="message" placeholder="Введите строку...">
+    <button id="send" type="submit" disabled="disabled">Отправить</button>
+</div>
+<br/>
+<div>
+    <table id="conversation">
+        <thead>
+        <tr>
+            <th>Строки</th>
+        </tr>
+        </thead>
+        <tbody id="strings">
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
