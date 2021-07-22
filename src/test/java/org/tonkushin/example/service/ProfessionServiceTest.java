@@ -6,7 +6,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.tonkushin.example.exception.CanNotDeleteException;
+import org.tonkushin.example.exception.CheckConstraintsException;
+import org.tonkushin.example.exception.ItemNotFoundException;
 import org.tonkushin.example.model.Profession;
+import org.tonkushin.example.repository.PersonRepository;
 import org.tonkushin.example.repository.ProfessionRepository;
 
 import java.util.ArrayList;
@@ -25,7 +29,9 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.save(profession)).thenReturn(profession);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThat(service.save(profession)).isEqualTo(profession);
     }
 
@@ -36,9 +42,11 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.save(profession)).thenReturn(profession);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThatThrownBy(() -> service.save(profession))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(CheckConstraintsException.class)
                 .hasMessageContaining("Поле 'Наименование' не должно быть пустым");
     }
 
@@ -50,9 +58,11 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.save(profession)).thenReturn(profession);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThatThrownBy(() -> service.save(profession))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(CheckConstraintsException.class)
                 .hasMessageContaining("Поле 'Наименование' не должно превышать 255 символов");
     }
 
@@ -65,9 +75,11 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.save(profession)).thenReturn(profession);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThatThrownBy(() -> service.save(profession))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(CheckConstraintsException.class)
                 .hasMessageContaining("Поле 'Примечание' не должно превышать 255 символов");
     }
 
@@ -87,9 +99,11 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.findByName(name)).thenReturn(existingOpt);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThatThrownBy(() -> service.save(profession))
-                .isInstanceOf(RuntimeException.class)
+                .isInstanceOf(CheckConstraintsException.class)
                 .hasMessageContaining(String.format("Профессия с именем '%s' уже существует", profession.getName()));
     }
 
@@ -105,7 +119,9 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.findAll()).thenReturn(professions);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThat(service.findAll().size()).isEqualTo(3);
     }
 
@@ -120,7 +136,9 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.findById(1L)).thenReturn(opt);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThat(service.findOne(1L)).isEqualTo(profession);
     }
 
@@ -135,9 +153,27 @@ public class ProfessionServiceTest {
         ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
         Mockito.when(repository.findById(1L)).thenReturn(opt);
 
-        ProfessionService service = new ProfessionServiceImpl(repository);
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
         Assertions.assertThatThrownBy(() -> service.findOne(2L))
-                .isInstanceOf(RuntimeException.class);
+                .isInstanceOf(ItemNotFoundException.class);
+    }
+
+    @Test
+    public void deleteProfessionShouldThrowException() {
+        ProfessionRepository repository = Mockito.mock(ProfessionRepository.class);
+
+        PersonRepository personRepository = Mockito.mock(PersonRepository.class);
+        Mockito.when(personRepository.countAllByProfession_Id(1L)).thenReturn(3L);
+
+        ProfessionService service = new ProfessionServiceImpl(repository, personRepository);
+
+        Assertions
+                .assertThatThrownBy(() -> {
+                    service.delete(1L);
+                })
+                .isInstanceOf(CanNotDeleteException.class);
     }
 
     private String generateString(int targetStringLength) {

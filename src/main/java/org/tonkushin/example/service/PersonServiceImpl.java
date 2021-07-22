@@ -1,6 +1,7 @@
 package org.tonkushin.example.service;
 
 import org.springframework.stereotype.Service;
+import org.tonkushin.example.exception.CheckConstraintsException;
 import org.tonkushin.example.exception.ItemNotFoundException;
 import org.tonkushin.example.model.Person;
 import org.tonkushin.example.repository.PersonRepository;
@@ -40,24 +41,24 @@ public class PersonServiceImpl implements PersonService {
     private void checkConstraints(Person item) {
         // Проверяем ограничения по полю Наименование
         if (item.getName() == null || item.getName().isEmpty()) {
-            throw new RuntimeException("Поле 'Наименование' не должно быть пустым");
+            throw new CheckConstraintsException("Поле 'Наименование' не должно быть пустым");
         } else if (item.getName() != null && item.getName().length() > 255) {
-            throw new RuntimeException("Поле 'Наименование' не должно превышать 255 символов");
+            throw new CheckConstraintsException("Поле 'Наименование' не должно превышать 255 символов");
         }
 
         // Проверяем ограничения по полю Подразделение
         if (item.getDepartment() == null) {
-            throw new RuntimeException("Поле 'Подразделение' не должно быть пустым");
+            throw new CheckConstraintsException("Поле 'Подразделение' не должно быть пустым");
         }
 
         // Проверяем ограничения по полю Профессия
         if (item.getProfession() == null) {
-            throw new RuntimeException("Поле 'Профессия' не должно быть пустым");
+            throw new CheckConstraintsException("Поле 'Профессия' не должно быть пустым");
         }
 
         // Проверяем ограничения по полю Примечание
         if (item.getNotes() != null && item.getNotes().length() > 255) {
-            throw new RuntimeException("Поле 'Примечание' не должно превышать 255 символов");
+            throw new CheckConstraintsException("Поле 'Примечание' не должно превышать 255 символов");
         }
     }
 

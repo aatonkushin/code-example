@@ -14,4 +14,7 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     Optional<Person> findById(Long id);
 
     List<Person> findAll();
+
+    Long countAllByDepartment_Id(long departmentId);
+    Long countAllByProfession_Id(long professionId);
 }
