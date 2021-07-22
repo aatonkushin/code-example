@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Пример кода</title>
@@ -8,9 +8,11 @@
 <h1>Пример кода</h1>
 <h2>API</h2>
 <ul>
-    <li><a href="/api/profession/">Профессии</a></li>
-    <li><a href="/api/department/">Подразделения</a></li>
-    <li><a href="/api/person/">Персонал</a></li>
+    <li>
+        <a href="/api/profession/">Профессии</a> <span th:inline="text">([[${professionsCount}]])</span>
+    </li>
+    <li><a href="/api/department/">Подразделения</a> <span th:inline="text">([[${departmentsCount}]])</span></li>
+    <li><a href="/api/person/">Персонал</a> <span th:inline="text">([[${personCount}]])</span></li>
 </ul>
 <h2>Дополнительно</h2>
 <ul>
