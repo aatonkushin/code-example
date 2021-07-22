@@ -2,9 +2,7 @@ package org.tonkushin.example.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -16,6 +14,7 @@ import javax.validation.constraints.Size;
 @Data
 public class Department {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id = -1L;      // код в БД
     @Column(nullable = false)
     @NotBlank

@@ -21,6 +21,7 @@ import java.util.Random;
 @RunWith(SpringRunner.class)
 @TestPropertySource("/test.properties")
 public class ProfessionServiceTest {
+
     @Test()
     public void saveNewProfession() {
         Profession profession = new Profession();
@@ -83,6 +84,7 @@ public class ProfessionServiceTest {
                 .hasMessageContaining("Поле 'Примечание' не должно превышать 255 символов");
     }
 
+    @Test()
     public void saveNewProfessionWithExistingNameShouldThrowException() {
         String name = "Профессия";
 

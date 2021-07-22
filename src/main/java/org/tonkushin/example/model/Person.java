@@ -14,7 +14,9 @@ import javax.validation.constraints.Size;
 @Data
 public class Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id = -1L;                  // код в БД
+
     @Column(nullable = false)
     @NotBlank
     @Size(max = 255)
