@@ -59,8 +59,8 @@ public class PersonRestController {
     //Редактирует
     @Operation(summary = "Edit person")
     @PutMapping(URL + "{id}")
-    public Person editPerson(@RequestBody Person item, @PathVariable String id) {
-        return service.save(item);
+    public Person editPerson(@RequestBody Person item, @PathVariable Long id) {
+        return service.update(item, id);
     }
 
     //Удаляет

@@ -29,6 +29,14 @@ public interface CrudService<T> {
     T save(T item);
 
     /**
+     * Обновляет запись в БД
+     * @param item элемент для сохранения
+     * @param id код существующего элемента
+     * @return сохранённую запись
+     */
+    T update (T item, Long id);
+
+    /**
      * Удаляет элемент из БД
      * @param item элемент для удаления
      */

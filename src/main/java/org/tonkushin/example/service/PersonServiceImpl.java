@@ -38,6 +38,19 @@ public class PersonServiceImpl implements PersonService {
         return repository.save(item);
     }
 
+    @Override
+    public Person update(Person item, Long id) {
+        checkConstraints(item);
+
+        return repository.findById(id).map(found -> {
+            found.setName(item.getName());
+            found.setNotes(item.getNotes());
+            found.setDepartment(item.getDepartment());
+            found.setProfession(item.getProfession());
+            return repository.save(found);
+        }).orElseThrow(ItemNotFoundException::new);
+    }
+
     private void checkConstraints(Person item) {
         // Проверяем ограничения по полю Наименование
         if (item.getName() == null || item.getName().isEmpty()) {

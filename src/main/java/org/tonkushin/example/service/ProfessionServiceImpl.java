@@ -44,6 +44,17 @@ public class ProfessionServiceImpl implements ProfessionService {
     }
 
     @Override
+    public Profession update(Profession item, Long id) {
+        checkConstraints(item);
+
+        return repository.findById(id).map(found -> {
+            found.setName(item.getName());
+            found.setNotes(item.getNotes());
+            return repository.save(found);
+        }).orElseThrow(ItemNotFoundException::new);
+    }
+
+    @Override
     public void delete(Profession item) {
         delete(item.getId());
     }

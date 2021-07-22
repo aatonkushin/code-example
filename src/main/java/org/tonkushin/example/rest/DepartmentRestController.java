@@ -60,8 +60,8 @@ public class DepartmentRestController {
     //Редактирует
     @Operation(summary = "Edit department by id")
     @PutMapping(URL + "{id}")
-    public Department editDepartment(@RequestBody Department item, @PathVariable String id) {
-        return service.save(item);
+    public Department editDepartment(@RequestBody Department item, @PathVariable Long id) {
+        return service.update(item, id);
     }
 
     //Удаляет

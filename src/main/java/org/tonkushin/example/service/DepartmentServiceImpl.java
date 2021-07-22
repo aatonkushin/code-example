@@ -43,6 +43,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public Department update(Department item, Long id) {
+        checkConstraints(item);
+
+        return repository.findById(id).map(found -> {
+            found.setName(item.getName());
+            found.setNotes(item.getNotes());
+            return repository.save(found);
+        }).orElseThrow(ItemNotFoundException::new);
+    }
+
+    @Override
     public void delete(Department item) {
         delete(item.getId());
     }

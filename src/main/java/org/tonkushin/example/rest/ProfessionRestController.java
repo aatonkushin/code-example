@@ -61,8 +61,8 @@ public class ProfessionRestController {
     //Редактирует
     @Operation(summary = "Edit profession by its id")
     @PutMapping(URL + "{id}")
-    public Profession editProfession(@RequestBody Profession item, @PathVariable String id) {
-        return service.save(item);
+    public Profession editProfession(@RequestBody Profession item, @PathVariable Long id) {
+        return service.update(item, id);
     }
 
     //Удаляет
